@@ -31,10 +31,11 @@ function Oracle() {
   const [compassMode, setCompassMode] = React.useState('manual'); // manual | asking | live | denied | unsupported
   const handlerRef = React.useRef(null);
 
-  // 每日 3 卦上限 + 2nd→3rd 需間隔 60 分鐘
+  // 每日 3 卦上限 + 卦間冷卻時間
   const STORAGE_KEY = 'oracle_casts';
   const DAILY_LIMIT = 3;
-  const GATE_BETWEEN_2_3_MS = 60 * 60 * 1000; // 1 hour
+  const GATE_BETWEEN_1_2_MS = 60 * 1000;       // 1 分鐘
+  const GATE_BETWEEN_2_3_MS = 60 * 60 * 1000;  // 1 小時
 
   const [castHistory, setCastHistory] = React.useState(() => {
     try {
@@ -54,10 +55,13 @@ function Oracle() {
   );
   const remainingToday = Math.max(0, DAILY_LIMIT - todayCasts.length);
   const lastTodayCast = todayCasts.length > 0 ? todayCasts[todayCasts.length - 1] : null;
-  // 第 2 次卜完，第 3 次要等一小時
-  const gateOpenAt = (todayCasts.length === 2 && lastTodayCast)
-    ? new Date(lastTodayCast.getTime() + GATE_BETWEEN_2_3_MS)
-    : null;
+  // 1→2 須等 1 分鐘，2→3 須等 1 小時
+  const gateOpenAt = (() => {
+    if (!lastTodayCast) return null;
+    if (todayCasts.length === 1) return new Date(lastTodayCast.getTime() + GATE_BETWEEN_1_2_MS);
+    if (todayCasts.length === 2) return new Date(lastTodayCast.getTime() + GATE_BETWEEN_2_3_MS);
+    return null;
+  })();
   const msUntilGateOpens = gateOpenAt ? gateOpenAt.getTime() - now.getTime() : 0;
   const isGated = gateOpenAt !== null && msUntilGateOpens > 0;
   const canCast = remainingToday > 0 && !isGated;
@@ -473,6 +477,9 @@ function Oracle() {
             )}
             {remainingToday === DAILY_LIMIT && '每人每日限 3 卦 · 用心一問'}
           </div>
+          {todayCasts.length > 0 && remainingToday > 0 && (
+            <div className="os-rehint">換個方位、再問一個新問題試試</div>
+          )}
         </div>
       )}
 
