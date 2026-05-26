@@ -41,15 +41,15 @@ function Story() {
 }
 
 function Gallery() {
-  const imgs = ['wedding_01', 'wedding_02', 'wedding_03', 'wedding_04', 'wedding_05', 'wedding_06', 'wedding_08'];
-  const captions = [
-    '妳最後的出招，我敗給了妳',
-    '想把妳攬在身邊一輩子',
-    '有妳在的世界充滿芬芳',
-    '不放手了',
-    '想抓住妳每一刻的笑容',
-    '妳的笑是治癒我的存在',
-    '接下來的每一步，我陪妳走',
+  // 每張可選填 pos = CSS object-position，控制 3:4 裁切視窗對齊到照片哪一塊
+  const photos = [
+    { n: 'wedding_01', caption: '妳最後的出招，我敗給了妳' },
+    { n: 'wedding_02', caption: '想把妳攬在身邊一輩子' },
+    { n: 'wedding_03', caption: '有妳在的世界充滿芬芳', pos: '35% center' },
+    { n: 'wedding_04', caption: '不放手了' },
+    { n: 'wedding_05', caption: '想抓住妳每一刻的笑容' },
+    { n: 'wedding_06', caption: '妳的笑是治癒我的存在' },
+    { n: 'wedding_08', caption: '接下來的每一步，我陪妳走' },
   ];
   return (
     <section className="gallery" data-screen-label="05 Gallery">
@@ -58,12 +58,17 @@ function Gallery() {
         <h2 className="sec-title">我們的小宇宙<br /><span className="cursive">Our little universe</span></h2>
       </div>
       <div className="gal-scroll">
-        {imgs.map((n, i) =>
-        <figure key={n} className="gal-card">
-            <img src={`assets/${n}.jpg`} alt={captions[i]} loading="lazy" />
+        {photos.map((p, i) =>
+        <figure key={p.n} className="gal-card">
+            <img
+              src={`assets/${p.n}.jpg`}
+              alt={p.caption}
+              loading="lazy"
+              style={p.pos ? { objectPosition: p.pos } : undefined}
+            />
             <figcaption>
               <span className="gc-n">{String(i + 1).padStart(2, '0')}</span>
-              <span>{captions[i]}</span>
+              <span>{p.caption}</span>
             </figcaption>
           </figure>
         )}
