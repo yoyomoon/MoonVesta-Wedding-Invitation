@@ -249,11 +249,15 @@ function Oracle() {
     // snapshot heading at cast time so it persists to result
     const snapHeading = heading;
     const snapMode = compassMode;
-    // stop listener to save battery
+    // stop listener + sensor to save battery and prevent post-cast overrides
     if (handlerRef.current) {
       window.removeEventListener('deviceorientation', handlerRef.current);
       window.removeEventListener('deviceorientationabsolute', handlerRef.current);
       handlerRef.current = null;
+    }
+    if (sensorRef.current) {
+      try { sensorRef.current.stop(); } catch (e) {}
+      sensorRef.current = null;
     }
     setStep('casting');
     // 把畫面對齊到占卜台，避免起卦後因為內容高度變化而跳到下一節
@@ -415,8 +419,12 @@ function Oracle() {
                       className={`compass-pt ${dirIdx === i ? 'on' : ''}`}
                       style={{ left: x+'%', top: y+'%', '--c': d.color }}
                       onClick={() => {
-                        // 手動選擇 = 鎖定。先關掉羅盤，避免感應器持續覆寫 dirIdx
-                        if (compassMode === 'live') stopCompass();
+                        // 手動選擇 = 鎖定。
+                        // 透過 ref 判斷比 compassMode state 更可靠
+                        // （state 切換有 React 排程延遲，listener 可能還沒被斷）
+                        if (handlerRef.current || sensorRef.current) {
+                          stopCompass();
+                        }
                         setDirIdx(i);
                       }}
                       aria-label={`選擇 ${d.k} 方`}
