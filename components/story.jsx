@@ -42,7 +42,15 @@ function Story() {
 
 function Gallery() {
   const imgs = ['wedding_01', 'wedding_02', 'wedding_03', 'wedding_04', 'wedding_05', 'wedding_06', 'wedding_08'];
-  const captions = ['正式一點', '調皮一點', '牽起手', '回頭一笑', '捧花', '靜靜的', '在一起'];
+  const captions = [
+    '鏡頭一開，妳就皮起來',
+    '街角的肩膀有點好聞',
+    '暫停一下 · 跟花一起呼吸',
+    '牽起手就不放了',
+    '妳一笑 · 整片白都暖了',
+    '用同一個姿勢想著妳',
+    '下一站 · 還是一起走',
+  ];
   return (
     <section className="gallery" data-screen-label="05 Gallery">
       <div className="sec-head">
