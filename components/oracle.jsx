@@ -414,7 +414,11 @@ function Oracle() {
                       key={i}
                       className={`compass-pt ${dirIdx === i ? 'on' : ''}`}
                       style={{ left: x+'%', top: y+'%', '--c': d.color }}
-                      onClick={() => setDirIdx(i)}
+                      onClick={() => {
+                        // 手動選擇 = 鎖定。先關掉羅盤，避免感應器持續覆寫 dirIdx
+                        if (compassMode === 'live') stopCompass();
+                        setDirIdx(i);
+                      }}
                       aria-label={`選擇 ${d.k} 方`}
                     >
                       <span className="cp-en">{d.en}</span>
