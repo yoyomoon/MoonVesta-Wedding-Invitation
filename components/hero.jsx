@@ -86,9 +86,6 @@ function Countdown() {
       <div className="cd-grid">
         {cell(d,'DAYS')}{cell(h,'HRS')}{cell(m,'MIN')}{cell(s,'SEC')}
       </div>
-      <div className="cd-foot">
-        2026 · 06 · 13 &nbsp;·&nbsp; SAT &nbsp;·&nbsp; 12:00 開席
-      </div>
     </section>
   );
 }
@@ -110,7 +107,6 @@ function Details() {
               <span>SAT</span>
             </div>
           </div>
-          <span className="bd-time">12:00 開席 · 11:30 入場</span>
         </div>
 
         <div className="detail-rows">
