@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+*.swp
+
+# Claude Code workspace state
+.claude/
+
+# Build & dev tools (don't ship to GitHub Pages)
+_bundle.py
+_serve.py
+dist/
+
+# TLS dev cert (security!)
+_cert.pem
+_key.pem
+
+# Logs / scratch
+*.log
+node_modules/
+
+# ─── Assets: ignore everything in assets/, then re-include only the files
+#     actually referenced by the page. Unused legacy assets remain on disk
+#     but never get committed.
+assets/*
+!assets/9years_with_car.JPG
+!assets/elementary_school.JPG
+!assets/logo_plum.png
+!assets/logo_icon.jpg
+!assets/lumi.jpg
+!assets/pet_02.jpg
+!assets/register_marriage.jpg
+!assets/story_05_react.jpg
+!assets/wedding_01.jpg
+!assets/wedding_02.jpg
+!assets/wedding_03.jpg
+!assets/wedding_04.jpg
+!assets/wedding_05.jpg
+!assets/wedding_06.jpg
+!assets/wedding_08.jpg
+!assets/wedding_illus.png
+_assets_raw/

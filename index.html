@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<title>Moon ♡ Vesta ｜ 電子喜帖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<meta name="description" content="Moon ♡ Vesta · 2026 · 06 · 13 · 桃園川門子時尚餐廳"/>
+<meta name="theme-color" content="#3d2817"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="components/data.jsx"></script>
+<script type="text/babel" src="components/hero.jsx"></script>
+<script type="text/babel" src="components/story.jsx"></script>
+<script type="text/babel" src="components/interactive.jsx"></script>
+<script type="text/babel" src="components/oracle.jsx"></script>
+<script type="text/babel" src="components/polaroid.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "palette": "maillard",
+  "headerFont": "fraunces",
+  "heroStyle": "photo"
+}/*EDITMODE-END*/;
+
+function TweaksPanel({ open, tweaks, setTweaks }) {
+  if (!open) return null;
+  const update = (k, v) => {
+    const next = { ...tweaks, [k]: v };
+    setTweaks(next);
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [k]: v } }, '*');
+  };
+  return (
+    <div className="tweaks">
+      <h3>Tweaks</h3>
+      <label>
+        <span>色系 PALETTE</span>
+        <div className="tw-row">
+          {[['maillard','美拉德棕'],['mocha','深摩卡'],['caramel','淺焦糖']].map(([v,l])=>(
+            <button key={v} className={tweaks.palette===v?'on':''} onClick={()=>update('palette',v)}>{l}</button>
+          ))}
+        </div>
+      </label>
+      <label>
+        <span>標題字 HEADER</span>
+        <div className="tw-row">
+          {[['fraunces','Fraunces'],['serif','思源宋']].map(([v,l])=>(
+            <button key={v} className={tweaks.headerFont===v?'on':''} onClick={()=>update('headerFont',v)}>{l}</button>
+          ))}
+        </div>
+      </label>
+      <label>
+        <span>主視覺 HERO</span>
+        <div className="tw-row">
+          {[['illustrated','插畫感'],['photo','婚紗照']].map(([v,l])=>(
+            <button key={v} className={tweaks.heroStyle===v?'on':''} onClick={()=>update('heroStyle',v)}>{l}</button>
+          ))}
+        </div>
+      </label>
+    </div>
+  );
+}
+
+function applyTweaks(t) {
+  const root = document.documentElement;
+  if (t.palette === 'mocha') {
+    root.style.setProperty('--paper', '#ead3a8');
+    root.style.setProperty('--ink-50', '#efe0b9');
+    root.style.setProperty('--accent', '#7a2a1e');
+  } else if (t.palette === 'caramel') {
+    root.style.setProperty('--paper', '#fbf2dc');
+    root.style.setProperty('--ink-50', '#fff8e3');
+    root.style.setProperty('--accent', '#c36b3e');
+  } else {
+    root.style.removeProperty('--paper');
+    root.style.removeProperty('--ink-50');
+    root.style.removeProperty('--accent');
+  }
+  if (t.headerFont === 'serif') {
+    root.style.setProperty('--display', '"Noto Serif TC", serif');
+  } else {
+    root.style.removeProperty('--display');
+  }
+  // hero style is handled via conditional render below
+}
+
+function App() {
+  const [tweaksOpen, setTweaksOpen] = React.useState(false);
+  const [tweaks, setTweaks] = React.useState(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTweaks(tweaks); }, [tweaks]);
+  React.useEffect(() => {
+    const h = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksOpen(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksOpen(false);
+    };
+    window.addEventListener('message', h);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', h);
+  }, []);
+
+  return (
+    <>
+      <Hero heroStyle={tweaks.heroStyle} />
+      <Countdown />
+      <Details />
+      <Story />
+      <Gallery />
+      <Schedule />
+      <Pets />
+      <Oracle />
+      <LoveLetter />
+      <Footer />
+      <TweaksPanel open={tweaksOpen} tweaks={tweaks} setTweaks={setTweaks} />
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
