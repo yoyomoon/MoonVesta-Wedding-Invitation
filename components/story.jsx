@@ -43,13 +43,13 @@ function Story() {
 function Gallery() {
   const imgs = ['wedding_01', 'wedding_02', 'wedding_03', 'wedding_04', 'wedding_05', 'wedding_06', 'wedding_08'];
   const captions = [
-    '妳出招了',
-    '靠著肩膀',
-    '跟花呼吸',
+    '妳最後的出招，我敗給了妳',
+    '想把妳攬在身邊一輩子',
+    '有妳在的世界充滿芬芳',
     '不放手了',
-    '妳笑開了',
-    '心事一樣',
-    '下一站 · 妳',
+    '想抓住妳每一刻的笑容',
+    '妳的笑是治癒我的存在',
+    '接下來的每一步，我陪妳走',
   ];
   return (
     <section className="gallery" data-screen-label="05 Gallery">
