@@ -45,7 +45,7 @@ function Gallery() {
   const photos = [
     { n: 'wedding_01', caption: '妳最後的出招，我敗給了妳' },
     { n: 'wedding_02', caption: '想把妳攬在身邊一輩子' },
-    { n: 'wedding_03', caption: '有妳在的世界充滿芬芳', pos: '80% center' },
+    { n: 'wedding_03', caption: '有妳在的世界充滿芬芳', pos: '47% center' },
     { n: 'wedding_04', caption: '不放手了' },
     { n: 'wedding_05', caption: '想抓住妳每一刻的笑容' },
     { n: 'wedding_06', caption: '妳的笑是治癒我的存在' },
