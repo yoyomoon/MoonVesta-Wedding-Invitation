@@ -317,6 +317,12 @@ function Oracle() {
     setResult(null);
     setDirIdx(null);
     setQuestion('');
+    // 回到 setup 後，重新對齊到占卜台頂部，避免捲動位置卡在「給你的一封信」
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
   };
 
   const dateStr = now.toLocaleDateString('zh-TW', { year:'numeric', month:'long', day:'numeric', weekday:'long' });
