@@ -31,7 +31,45 @@ function Oracle() {
   const [compassMode, setCompassMode] = React.useState('manual'); // manual | asking | live | denied | unsupported
   const handlerRef = React.useRef(null);
 
-  // live clock in setup
+  // 每日 3 卦上限 + 2nd→3rd 需間隔 60 分鐘
+  const STORAGE_KEY = 'oracle_casts';
+  const DAILY_LIMIT = 3;
+  const GATE_BETWEEN_2_3_MS = 60 * 60 * 1000; // 1 hour
+
+  const [castHistory, setCastHistory] = React.useState(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const arr = JSON.parse(raw);
+      if (!Array.isArray(arr)) return [];
+      return arr.map(t => new Date(t)).filter(d => !Number.isNaN(d.getTime()));
+    } catch (e) { return []; }
+  });
+
+  // 只算今天（local time 的 yyyy-mm-dd 相同）
+  const todayCasts = castHistory.filter(d =>
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth()    === now.getMonth() &&
+    d.getDate()     === now.getDate()
+  );
+  const remainingToday = Math.max(0, DAILY_LIMIT - todayCasts.length);
+  const lastTodayCast = todayCasts.length > 0 ? todayCasts[todayCasts.length - 1] : null;
+  // 第 2 次卜完，第 3 次要等一小時
+  const gateOpenAt = (todayCasts.length === 2 && lastTodayCast)
+    ? new Date(lastTodayCast.getTime() + GATE_BETWEEN_2_3_MS)
+    : null;
+  const msUntilGateOpens = gateOpenAt ? gateOpenAt.getTime() - now.getTime() : 0;
+  const isGated = gateOpenAt !== null && msUntilGateOpens > 0;
+  const canCast = remainingToday > 0 && !isGated;
+
+  const fmtCountdown = (ms) => {
+    const total = Math.max(0, Math.ceil(ms / 1000));
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    return `${m} 分 ${String(s).padStart(2, '0')} 秒`;
+  };
+
+  // live clock in setup（同時驅動 gate 倒數刷新）
   React.useEffect(() => {
     if (step !== 'setup') return;
     const t = setInterval(() => setNow(new Date()), 1000);
@@ -196,6 +234,14 @@ function Oracle() {
 
   const cast = () => {
     if (dirIdx === null) return;
+    if (!canCast) return; // 額度用盡 / gated by 60-min rule
+    // 記錄這次起卦時戳到 localStorage（先記，避免使用者中途離開繞過上限）
+    const castedAt = new Date();
+    const newHistory = [...castHistory, castedAt];
+    setCastHistory(newHistory);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newHistory.map(d => d.toISOString())));
+    } catch (e) {}
     // snapshot heading at cast time so it persists to result
     const snapHeading = heading;
     const snapMode = compassMode;
@@ -410,13 +456,23 @@ function Oracle() {
           </div>
 
           <button
-            className={`os-cast ${dirIdx === null ? 'disabled' : ''}`}
+            className={`os-cast ${(dirIdx === null || !canCast) ? 'disabled' : ''}`}
             onClick={cast}
-            disabled={dirIdx === null}
+            disabled={dirIdx === null || !canCast}
           >
             <span className="osc-t">起 卦</span>
             <span className="osc-s">CAST THE ORACLE</span>
           </button>
+          <div className="os-quota">
+            {remainingToday === 0 && '今日三卦已盡 · 明日請早'}
+            {remainingToday > 0 && isGated && (
+              <>下一卦 · <span className="osq-num">{fmtCountdown(msUntilGateOpens)}</span> 後再來</>
+            )}
+            {remainingToday > 0 && !isGated && remainingToday < DAILY_LIMIT && (
+              <>今日剩餘 <span className="osq-num">{remainingToday}</span> 次</>
+            )}
+            {remainingToday === DAILY_LIMIT && '每人每日限 3 卦 · 用心一問'}
+          </div>
         </div>
       )}
 
