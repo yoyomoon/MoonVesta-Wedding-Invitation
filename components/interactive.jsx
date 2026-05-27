@@ -240,9 +240,9 @@ function Footer() {
         <div className="foot-sub">一貓兩人三餐四季　平淡是真</div>
         <div className="foot-line">Moon ♡ Vesta · Umeshu Est. 2026</div>
         <div className="foot-meta">
-          <span>designed with 🤎</span>
+          <span>made with 🤎</span>
           <span>·</span>
-          <span>桃園蘆竹 · 川門子時尚餐廳</span>
+          <span>桃園蘆竹</span>
         </div>
       </div>
     </footer>

@@ -51,11 +51,11 @@ const STORY = [
 ];
 
 const SCHEDULE = [
-  { time: '11:30', label: '賓客入場', hint: '拍張照、來杯雞尾酒、用拍貼機留下今天的美好' },
-  { time: '12:00', label: '迎賓開席', hint: '入座前請先參考當日安排的座位表' },
-  { time: '12:30', label: '新人進場', hint: '掌聲請準備' },
-  { time: '13:30', label: '第二次進場', hint: '換裝登場' },
-  { time: '14:30', label: '送客合影', hint: '別忘了帶走囍糖和你的好運' },
+  { time: '11:30', emoji: '🥂', label: '賓客入場', hint: '拍張照、來杯雞尾酒、用拍貼機留下今天的美好' },
+  { time: '12:00', emoji: '🍽', label: '迎賓開席', hint: '入座前請先參考當日安排的座位表' },
+  { time: '12:30', emoji: '💍', label: '新人進場', hint: '掌聲請準備' },
+  { time: '13:30', emoji: '👗', label: '第二次進場', hint: '換裝登場' },
+  { time: '14:30', emoji: '🎁', label: '送客合影', hint: '別忘了帶走囍糖和你的好運' },
 ];
 
 const PETS = [

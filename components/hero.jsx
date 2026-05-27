@@ -7,7 +7,7 @@ function Hero({ heroStyle = 'photo' }) {
       <div className="hero-inner">
         <div className="hero-tag">
           <span className="dot" />
-          <span>A WEDDING INVITATION · 2026</span>
+          <span>JUNE 2026 · A LITTLE WEDDING</span>
           <span className="dot" />
         </div>
         <div className="hero-title">
@@ -55,7 +55,7 @@ function Hero({ heroStyle = 'photo' }) {
         </div>
 
         <div className="scroll-hint">
-          <span>往下捲　慢慢看我們的故事</span>
+          <span>往下捲 · 看我們的故事</span>
           <svg width="14" height="22" viewBox="0 0 14 22"><rect x="1" y="1" width="12" height="20" rx="6" stroke="#5b3a22" strokeWidth="1.3" fill="none"/><circle cx="7" cy="7" r="1.6" fill="#5b3a22"><animate attributeName="cy" values="7;13;7" dur="1.8s" repeatCount="indefinite"/></circle></svg>
         </div>
       </div>

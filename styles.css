@@ -485,7 +485,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: relative; z-index: 1;
 }
 .tl-body { flex: 1; }
-.tl-label { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink-800); letter-spacing: 0.05em;}
+.tl-label { font-family: var(--serif); font-size: 17px; font-weight: 600; color: var(--ink-800); letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px;}
+.tl-emoji { font-size: 19px; line-height: 1; display: inline-block; transform: translateY(-1px); filter: saturate(0.95);}
 .tl-hint { font-size: 13px; color: var(--ink-500); margin-top: 2px;}
 
 /* ========== Pets ========== */

@@ -5,7 +5,7 @@ function Story() {
   return (
     <section className="story" data-screen-label="04 Story">
       <div className="sec-head light">
-        <span className="sec-kicker">OUR STORY</span>
+        <span className="sec-kicker">✦ OUR STORY ✦</span>
         <h2 className="sec-title">繞了一圈<br /><span className="cursive">還是妳</span></h2>
       </div>
       <div className="story-wrap">
@@ -54,7 +54,7 @@ function Gallery() {
   return (
     <section className="gallery" data-screen-label="05 Gallery">
       <div className="sec-head">
-        <span className="sec-kicker">MOMENTS</span>
+        <span className="sec-kicker">✦ MOMENTS ✦</span>
         <h2 className="sec-title">我們的小宇宙<br /><span className="cursive">Our little universe</span></h2>
       </div>
       <div className="gal-scroll">
@@ -73,7 +73,7 @@ function Gallery() {
           </figure>
         )}
       </div>
-      <div className="gal-hint">← 左右滑動 ·  swipe →</div>
+      <div className="gal-hint">← 左右滑　看完整段小宇宙 →</div>
     </section>);
 
 }
@@ -91,7 +91,10 @@ function Schedule() {
             <div className="tl-time">{s.time}</div>
             <div className="tl-dot" />
             <div className="tl-body">
-              <div className="tl-label">{s.label}</div>
+              <div className="tl-label">
+                {s.emoji && <span className="tl-emoji">{s.emoji}</span>}
+                {s.label}
+              </div>
               <div className="tl-hint">{s.hint}</div>
             </div>
           </div>
@@ -135,9 +138,9 @@ function Pets() {
   return (
     <section className="pets" data-screen-label="07 Pets">
       <div className="sec-head light">
-        <span className="sec-kicker">THE PAWS CREW · 2 MEMBERS</span>
+        <span className="sec-kicker">THE PAWS CREW</span>
         <h2 className="sec-title">毛孩家族 歡迎列席</h2>
-        <p className="sec-sub">因為場地限制，他們無法親自出席 🐾 但靈魂早已到場 👻<br /><span className="dim-i">點點他們的臉 🐱🐶 聽聽他們今天想說什麼 ✨</span></p>
+        <p className="sec-sub">他們不能親到場 · 但靈魂早就先坐好了 🐾<br /><span className="dim-i">點點他們的臉 · 聽聽今天想說什麼 ✨</span></p>
       </div>
 
       <div className="pets-duo">
