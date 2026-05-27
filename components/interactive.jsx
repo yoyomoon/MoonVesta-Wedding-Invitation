@@ -238,7 +238,7 @@ function Footer() {
         </div>
         <div className="foot-big">HAPPY WIFE<br/>HAPPY LIFE</div>
         <div className="foot-sub">一貓兩人三餐四季　平淡是真</div>
-        <div className="foot-line">Moon ♡ Vesta · Umeshu Est. 2026</div>
+        <div className="foot-line">Moon ♡ Vesta · Est. 2026</div>
         <div className="foot-meta">
           <span>made with 🤎</span>
           <span>·</span>
