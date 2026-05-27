@@ -180,8 +180,9 @@ function Oracle() {
       }
     };
     handlerRef.current = onOrient;
-    window.addEventListener('deviceorientationabsolute', onOrient, true);
-    window.addEventListener('deviceorientation', onOrient, true);
+    // 注意：不用 capture phase（第三個參數），讓 removeEventListener 對得起來
+    window.addEventListener('deviceorientationabsolute', onOrient);
+    window.addEventListener('deviceorientation', onOrient);
     return true;
   };
 
