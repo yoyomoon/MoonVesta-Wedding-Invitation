@@ -39,3 +39,10 @@ assets/*
 !assets/wedding_08.jpg
 !assets/wedding_illus.png
 _assets_raw/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
