@@ -152,7 +152,6 @@ function Details() {
             const w = window.open(url, '_blank', 'noopener,noreferrer');
             if (!w) { try { window.top.location.href = url; } catch (err) { window.location.href = url; } }
           }}>打開地圖 →</a>
-          <a className="btn btn-ghost" href="#fortune">抽一支婚禮籤 ✦</a>
         </div>
       </div>
     </section>
